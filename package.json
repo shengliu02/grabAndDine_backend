@@ -1,0 +1,25 @@
+{
+  "name": "grabanddine_backend",
+  "version": "1.0.0",
+  "description": "grabAndDine backend server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sheng1302/grabAndDine_backend.git"
+  },
+  "author": "DineAndGrab Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sheng1302/grabAndDine_backend/issues"
+  },
+  "homepage": "https://github.com/sheng1302/grabAndDine_backend#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.10"
+  }
+}
