@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     request_user_id: DataTypes.UUID,
-    matched_user_id: DataTypes.UUID,
     location: DataTypes.STRING,
     time_requested: DataTypes.STRING
   });
