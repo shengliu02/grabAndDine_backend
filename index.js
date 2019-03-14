@@ -4,7 +4,8 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const expressSession = require('express-session');
 const passport = require('./middlewares/auth');
-const controller = require('./controllers')
+const controller = require('./controllers');
+const models = require('./models');
 const PORT = process.env.PORT || 5000;
 const app = express();
 
@@ -34,8 +35,11 @@ app.get('*', (req, res) => {
     res.send("ERROR 404");
 });
 
+models.sequelize.sync({ force: false })
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log("Listening at port " + PORT)
+        });
+    });
 
-app.listen(PORT, () => {
-   console.log("Listening at port " + PORT)
-});
 
