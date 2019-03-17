@@ -7,16 +7,18 @@ const passport = require('./middlewares/auth');
 const controller = require('./controllers')
 const PORT = process.env.PORT || 5000;
 const app = express();
-
+const models = require('./models');
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(flash());
 app.use(expressSession({
-    secret : "GRABANDDINE - INTERNAL SECRET KEY - 666666",
-    resave : false,
-    saveUnitialized : true
+  secret : "GRABANDDINE - INTERNAL SECRET KEY - 666666",
+  resave : false,
+  saveUnitialized : true
 }));
 
 app.use(passport.initialize());
@@ -26,16 +28,37 @@ app.use(controller);
 
 
 app.get('/', (req, res) => {
-    res.send("You are on the right site. : )");
+  //res.send("You are on the right site. : )");
+  res.sendFile(__dirname + '/index.html');
 });
 
+io.on('connection', function(socket){
+    console.log('a user connected');
+  });
+  
+io.on('connection', function(socket){
+console.log('a user connected');
+socket.on('disconnect', function(){
+    console.log('user disconnected');
+});
+});
+
+io.emit('some event', { for: 'everyone' });
+
+io.on('connection', function(socket){
+    socket.on('chat message', function(msg){
+      io.emit('chat message', msg);
+    });
+  });
 
 app.get('*', (req, res) => {
-    res.send("ERROR 404");
+  res.send("ERROR 404");
 });
 
 
-app.listen(PORT, () => {
-   console.log("Listening at port " + PORT)
-});
-
+models.sequelize.sync({ force: false })
+  .then(() => {
+    http.listen(PORT, () => {
+      console.log(`Server is up and running on port: ${PORT}`)
+    });
+  });
