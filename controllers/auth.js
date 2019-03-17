@@ -30,9 +30,9 @@ const AUTH_CONTROLLER = {
     login(req,res){
         res.json({
             user_id: req.user.user_id,
-            email: req.user.email,
-            username: req.user.username,
-            address: req.user.address,
+            email: req.body.email,
+            username: req.body.username,
+            food_restrictions: req.body.food_restrictions,
         });
 
 
@@ -54,8 +54,7 @@ const AUTH_CONTROLLER = {
                             email: req.body.email,
                             username: req.body.username,
                             password_hash: req.body.password,
-                            address: req.body.address,
-                            user_type: req.body.user_type,
+                            food_restrictions: req.body.food_restrictions,
                         }).then((user) => {
                             res.json({message: `Account for ${req.body.username} has been created. `});
                         }).catch(() => {
