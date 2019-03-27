@@ -8,7 +8,6 @@ const controller = require('./controllers');
 const models = require('./models');
 const PORT = process.env.PORT || 5000;
 const app = express();
-const models = require('./models');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
@@ -44,7 +43,6 @@ socket.on('disconnect', function(){
 });
 });
 
-<<<<<<< HEAD
 io.emit('some event', { for: 'everyone' });
 
 io.on('connection', function(socket){
@@ -56,18 +54,8 @@ io.on('connection', function(socket){
 app.get('*', (req, res) => {
   res.send("ERROR 404");
 });
-=======
-models.sequelize.sync({ force: false })
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log("Listening at port " + PORT)
-        });
-    });
 
->>>>>>> master
-
-
-models.sequelize.sync({ force: false })
+models.sequelize.sync({ force: true })
   .then(() => {
     http.listen(PORT, () => {
       console.log(`Server is up and running on port: ${PORT}`)

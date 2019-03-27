@@ -39,7 +39,7 @@ const AUTH_CONTROLLER = {
     },
 
     signup(req,res){
-        if(req.body.email === undefined || req.body.username === undefined || req.body.password === undefined || req.body.address === undefined || req.body.user_type === undefined){
+        if(req.body.email === undefined || req.body.username === undefined || req.body.password === undefined){
 
             res.status(400).json( {message : 'Inputs are invalid! Please make sure all information are completed correctly. ' } );
         } else {
