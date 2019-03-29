@@ -7,9 +7,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         user1_id: DataTypes.UUID,
         user2_id: DataTypes.UUID,
-        time_matched: DataTypes.STRING
 
     });
+
 
     Matches.associate = function(models) {
         Matches.belongsTo(models.Users, {

@@ -33,5 +33,10 @@
     "pg": "^7.8.1",
     "sequelize": "^4.43.0",
     "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.3",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
   }
 }

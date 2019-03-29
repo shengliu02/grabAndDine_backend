@@ -5,9 +5,9 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true
     },
+    is_matched: DataTypes.BOOLEAN,
     request_user_id: DataTypes.UUID,
     location: DataTypes.STRING,
-    time_requested: DataTypes.STRING
   });
 
   Requests.associate = function(models) {
@@ -15,9 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "request_user_id"
     });
 
-    Requests.belongsTo(models.Users, {
-      foreignKey: "matched_user_id"
-    });
   };
 
   return Requests;
