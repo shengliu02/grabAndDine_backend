@@ -24,16 +24,32 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     password_hash: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+        allowNull: false,
     },
     food_restrictions: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-
       allowNull: false,
       validate: {
         notEmpty: true
       }
-    }
+    },
+      bios: {
+        type: DataTypes.STRING,
+          defaultValue: "Do not have a bios yet!",
+          allowNull: false,
+      },
+      gender: {
+          type: DataTypes.STRING,
+          defaultValue: "Unspecified",
+          allowNull: false,
+      }
+      ,
+      age: {
+          type: DataTypes.INTEGER,
+          defaultValue: 0,
+          allowNull: false,
+      }
   });
 
   // this is a Sequelize lifecycle hook

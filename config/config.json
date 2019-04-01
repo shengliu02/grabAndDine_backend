@@ -12,7 +12,8 @@
     "password": "postgres",
     "database": "grabanddine_dev",
     "host": "127.0.0.1",
-    "dialect": "postgresql"
+    "dialect": "postgresql",
+    "API_KEY": "GADAPI_KEY"
   },
   "test": {
     "username": "root",

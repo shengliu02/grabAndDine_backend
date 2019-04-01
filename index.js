@@ -52,7 +52,7 @@ app.get('*', (req, res) => {
   res.send('ERROR 404');
 });
 
-models.sequelize.sync({ force: true })
+models.sequelize.sync({ force: false })
   .then(() => {
     http.listen(PORT, () => {
       console.log(`Server is up and running on port: ${PORT}`);
