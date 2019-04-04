@@ -10,7 +10,10 @@ const models = require('./models');
 const PORT = process.env.PORT || 5000;
 const app = express();
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const io = require('socket.io')(http); // (http);
+
+// private channel between p2p
+const channel = require('./middlewares/channels')(io);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,26 +30,11 @@ app.use(passport.session());
 
 app.use(controller);
 
-
-app.get('/', (req, res) => {
-  // res.send("You are on the right site. : )");
-  res.sendFile(`${__dirname}/index.html`);
-});
-
-
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('disconnect', () => {
-        console.log('user disconnected');
-    });
-});
-
-
-io.on('connection', (socket) => {
-  socket.on('chat message', (msg) => {// handshakes
-    io.emit('chat message', msg);
-  });
-});
+// --> following code is being relocated to ./controllers/channels
+// app.get('/channel', (req, res) => {
+//   // res.send("You are on the right site. : )");
+//   res.sendFile(`${__dirname}/views/index.html`);
+// });
 
 app.get('*', (req, res) => {
   res.send('ERROR 404');
