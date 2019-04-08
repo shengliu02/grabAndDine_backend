@@ -20,7 +20,8 @@
     "password": null,
     "database": "grabanddine_test",
     "host": "127.0.0.1",
-    "dialect": "postgresql"
+    "dialect": "postgresql",
+    "API_KEY": "GADAPI_KEY"
   },
   "production": {
     "username": "root",
@@ -28,6 +29,7 @@
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "postgresql",
-    "use_env_variable": "DATABASE_URL"
+    "use_env_variable": "DATABASE_URL",
+    "API_KEY": "GADAPI_KEY"
   }
 }
