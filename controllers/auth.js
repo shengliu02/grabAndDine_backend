@@ -31,9 +31,9 @@ const AUTH_CONTROLLER = {
   login(req, res) {
     res.json({
       user_id: req.user.user_id,
-      email: req.body.email,
-      username: req.body.username,
-      food_restrictions: req.body.food_restrictions,
+      email: req.user.email,
+      username: req.user.username,
+      food_restrictions: req.user.food_restrictions,
     });
   },
 
