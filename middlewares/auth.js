@@ -19,7 +19,7 @@ passport.use(new LocalStrategy({
       return done(null, false, { message: 'Incorrect password.' });
     }
 
-    return done(null, user, { message: 'Successfully Logged In!' });
+    return done(null, userObject, { message: 'Successfully Logged In!' });
   });
 }));
 

@@ -29,6 +29,7 @@ const AUTH_CONTROLLER = {
     }, */
 
   login(req, res) {
+
     res.json({
       user_id: req.user.user_id,
       email: req.user.email,
