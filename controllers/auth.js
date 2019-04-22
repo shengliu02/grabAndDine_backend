@@ -52,7 +52,7 @@ const AUTH_CONTROLLER = {
               email: req.body.email,
               username: req.body.username,
               password_hash: req.body.password,
-              food_restrictions: req.body.food_restrictions,
+              dietary_options: req.body.dietary_options,
             }).then((userObject) => {
               res.json({ message: `${userObject} has been created. ` });
             }).catch(() => {
