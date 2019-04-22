@@ -34,7 +34,10 @@ const AUTH_CONTROLLER = {
       user_id: req.user.user_id,
       email: req.user.email,
       username: req.user.username,
-      food_restrictions: req.user.food_restrictions,
+      biod: req.user.bios,
+      gender: req.user.gender,
+      age: req.user.age,
+      dietary_options: req.user.dietary_options,
     });
   },
 
