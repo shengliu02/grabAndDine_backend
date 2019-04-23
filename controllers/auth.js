@@ -29,15 +29,17 @@ const AUTH_CONTROLLER = {
     }, */
 
   login(req, res) {
-
     res.json({
-      user_id: req.user.user_id,
-      email: req.user.email,
-      username: req.user.username,
-      biod: req.user.bios,
-      gender: req.user.gender,
-      age: req.user.age,
-      dietary_options: req.user.dietary_options,
+      response:
+        {
+          user_id: req.user.user_id,
+          email: req.user.email,
+          username: req.user.username,
+          biod: req.user.bios,
+          gender: req.user.gender,
+          age: req.user.age,
+          dietary_options: req.user.dietary_options,
+        },
     });
   },
 
