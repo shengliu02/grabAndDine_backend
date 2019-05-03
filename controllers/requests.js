@@ -29,50 +29,66 @@ const AUTH_CONTROLLER = {
         const curr = item.dataValues;
         let userHere;
         let matchedUser = 0;
-        let isMatched = false;
+        let hasResponded = false;
         Requests.findAll().then((users) => {
           if (Object.keys(users).length === 1) {
-            res.status(500).json({ message: 'you are the only one' });
-          }
-          users.forEach((each) => {
-            if (each.dataValues.request_user_id !== curr.request_user_id
+            hasResponded = true;
+            res.status(201).json({
+              message: 'you are the only one',
+              request_id: curr.request_id,
+              match_id: null,
+              status: 0,
+            });
+          } else {
+            users.forEach((each) => {
+              if (each.dataValues.request_user_id !== curr.request_user_id
               && each.dataValues.is_matched === false
-              && each.dataValues.location === curr.location) {
-              isMatched = true;
-              userHere = each;
-              matchedUser = userHere.dataValues.request_user_id;
+              && each.dataValues.location === curr.location
+              && !hasResponded) {
+                hasResponded = true;
+                userHere = each;
+                matchedUser = userHere.dataValues.request_user_id;
 
-              Requests.update({
-                is_matched: true,
-              }, {
-                where: {
-                  request_id: userHere.dataValues.request_id,
-                },
-              }).then().catch();
-
-              Requests.update({
-                is_matched: true,
-              }, {
-                where: {
-                  request_id: curr.request_id,
-                },
-              }).then().catch();
-
-              models.Matches.create({
-                user1_id: curr.request_user_id,
-                user2_id: matchedUser,
-              }).then(() => {
-                res.status(201).json({
-                  message: 'match found',
-                  userMatched: matchedUser,
-                });
-              }).catch((err) => {
-                res.status(500).json({ message: err });
-              });
-            }
-          });
-          if (!isMatched) {
-            res.status(201).json({ message: 'Try again' });
+                Requests.update({
+                  is_matched: true,
+                }, {
+                  where: {
+                    request_id: userHere.dataValues.request_id,
+                  },
+                }).then(() => {
+                  Requests.update({
+                    is_matched: true,
+                  }, {
+                    where: {
+                      request_id: curr.request_id,
+                    },
+                  }).then(() => {
+                    models.Matches.create({
+                      user1_id: curr.request_user_id,
+                      user2_id: matchedUser,
+                    }).then((match) => {
+                      res.status(201).json({
+                        message: 'Match found !',
+                        userMatched: matchedUser,
+                        match_id: match.dataValues.match_id,
+                        status: 1,
+                        request_id: curr.request_id,
+                      });
+                    }).catch((err) => {
+                      res.status(500).json({ message: err });
+                    });
+                  }).catch();
+                }).catch();
+              }
+            });
+          }
+          if (!hasResponded) {
+            res.status(201).json({
+              message: 'No match currently available',
+              request_id: curr.request_id,
+              match_id: null,
+              status: 2,
+            });
           }
         }).catch((err) => {
           res.status(500).json({ message: err });
@@ -82,6 +98,12 @@ const AUTH_CONTROLLER = {
         res.status(500).json({ message: err });
       });
   },
+
+  // check(req, res){
+  //   Matches.get({
+
+  //   })
+  // }
 };
 
 module.exports = AUTH_CONTROLLER.registerRoute();
