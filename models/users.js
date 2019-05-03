@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    food_restrictions: {
+    dietary_options: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
       validate: {
@@ -44,8 +44,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'Unspecified',
       allowNull: false,
+<<<<<<< HEAD
     },
     age: {
+=======
+    },      
+      age: {
+>>>>>>> add_db
       type: DataTypes.INTEGER,
       defaultValue: 0,
       allowNull: false,
@@ -54,12 +59,21 @@ module.exports = (sequelize, DataTypes) => {
 
   // this is a Sequelize lifecycle hook
   Users.beforeCreate(user => new sequelize.Promise((resolve) => {
+<<<<<<< HEAD
     bcrypt.hash(user.password_hash, null, null, (err, hashedPassword) => {
       resolve(hashedPassword);
     });
   }).then((hashedPw) => {
     user.password_hash = hashedPw;
   }));
+=======
+      bcrypt.hash(user.password_hash, null, null, (err, hashedPassword) => {
+        resolve(hashedPassword);
+      });
+    }).then((hashedPw) => {
+      user.password_hash = hashedPw;
+    }),);
+>>>>>>> add_db
 
   Users.associate = function (models) {
     Users.hasMany(models.Requests, {
