@@ -5,6 +5,9 @@ const passport = require('../middlewares/auth');
 const router = express.Router();
 const User = models.Users;
 
+const env = process.env.NODE_ENV || 'development';
+const config = require(`${__dirname  }/../config/config.json`)[env];
+
 const AUTH_CONTROLLER = {
   registerRoute() {
     router.get('/error', this.error);
@@ -30,39 +33,47 @@ const AUTH_CONTROLLER = {
 
   login(req, res) {
     res.json({
-      response:
-        {
-          user_id: req.user.user_id,
-          email: req.user.email,
-          username: req.user.username,
-          biod: req.user.bios,
-          gender: req.user.gender,
-          age: req.user.age,
-          dietary_options: req.user.dietary_options,
-        },
+      user_id: req.user.user_id,
+      email: req.user.email,
+      username: req.user.username,
+      dietary_options: req.user.dietary_options,
+      age: req.user.age,
+      bios: req.user.bios,
+      gender: req.user.gender,
     });
   },
 
   signup(req, res) {
-    if (req.body.email === undefined || req.body.username === undefined || req.body.password === undefined) {
+    if ((req.body.email === undefined || req.body.username === undefined || req.body.password === undefined || req.body.authKey !== process.env[config.API_KEY])) {
       res.status(400).json({ message: 'Inputs are invalid! Please make sure all information are completed correctly. ' });
     } else {
       const { email } = req.body;
+      const { username } = req.body;
       User.findOne({ where: { email } })
         .then((user) => {
           if (user) {
-            res.json({ message: 'User already exist! Please input a different email.' });
+            res.status(400).json({ message: 'User already exist! Please input a different email.' });
           } else {
-            User.create({
-              email: req.body.email,
-              username: req.body.username,
-              password_hash: req.body.password,
-              dietary_options: req.body.dietary_options,
-            }).then((userObject) => {
-              res.json({ message: `${userObject} has been created. ` });
-            }).catch(() => {
-              res.status(400).json({ message: 'error creating user' });
-            });
+            User.findOne({ where: { username } })
+              .then((user) => {
+                if (user) {
+                  res.status(400).json({ message: 'User already exist! Please input a different username.' });
+                } else {
+                  User.create({
+                    email: req.body.email,
+                    username: req.body.username,
+                    password_hash: req.body.password,
+                    dietary_options: req.body.dietary_options,
+                    age: req.body.age,
+                    bios: req.body.bios,
+                    gender: req.body.gender,
+                  }).then((userObject) => {
+                    res.json({ message: `${userObject.username} has been created. ` });
+                  }).catch(() => {
+                    res.status(400).json({ message: 'error creating user' });
+                  });
+                }
+              });
           }
         })
         .catch((err) => {
