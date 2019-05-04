@@ -18,21 +18,36 @@
     <form action="">
       	your name:<input id="user_name" type="text"/><br>
         sending to：<input id="to" type="text" /><br>
+        <label id="status" type="text"><label><br>
         <input id="message" autocomplete="off" /><button>Send</button>
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
       $(function () {
-  
+        var socket = io(); // has to create a new IO each execution to avoid comment duplications
+
+        $('#status').change( (e) => {
+          var from = $('#user_name').val(), msg  = $('#message').val(), to = $('#to').val();
+          if(msg === ''){
+            socket.emit('updateTypingStatus',from,to,'');
+          } else{
+            socket.emit('updateTypingStatus',from,to,' is typing...');
+          }
+          
+        })
         
         $('form').submit(function(e){
-          var socket = io(); // has to create a new IO each execution to avoid comment duplications
+          
           var from = $('#user_name').val(), msg  = $('#message').val(), to = $('#to').val();
 
           e.preventDefault(); // prevents page reloading
           socket.on('privateMsgTo'+from, function(data){
             $('#messages').append($('<li>').text( data.from + " said to you: " + data.msg));
+          });
+
+          socket.on('typingUpdateTo'+from, function(data){
+            $('#status').text(data.from + " " + data.status)
           });
 
           socket.emit('new user',from);
