@@ -5,12 +5,12 @@ exports = module.exports = function (io) {
     console.log('user login');
 
     socket.on('new user', (data) => {
-      //if (data in userOnline) {
+      // if (data in userOnline) {
       //   console.log('user already exists!');
       // } else {
-        const nickname = data;
-        userOnline[nickname] = socket; // take their socket ID as their nickname
-      //}
+      const nickname = data;
+      userOnline[nickname] = socket; // take their socket ID as their nickname
+      // }
     });
 
     socket.on('chat message', (from, to, msg) => {
@@ -36,6 +36,7 @@ exports = module.exports = function (io) {
     });
 
     socket.on('disconnect', () => {
+      // eslint-disable-next-line no-console
       console.log('user disconnected');
     });
   });
