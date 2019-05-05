@@ -8,12 +8,17 @@ module.exports = (sequelize, DataTypes) => {
     is_matched: DataTypes.BOOLEAN,
     request_user_id: DataTypes.UUID,
     location: DataTypes.STRING,
+    match_id_ref: DataTypes.UUID
   });
 
   Requests.associate = function (models) {
     Requests.belongsTo(models.Users, {
       foreignKey: 'request_user_id',
     });
+    Requests.belongsTo(models.Users, {
+      foreignKey: 'match_id_ref',
+    });
+
   };
 
   return Requests;

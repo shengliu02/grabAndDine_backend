@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     Matches.belongsTo(models.Users, {
       foreignKey: 'user2_id',
     });
+    Matches.hasMany(models.Requests, {
+      foreignKey: 'match_id_ref',
+    });
   };
 
   return Matches;
