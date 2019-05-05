@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    food_restrictions: {
+    dietary_options: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
       validate: {

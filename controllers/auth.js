@@ -63,7 +63,7 @@ const AUTH_CONTROLLER = {
                     email: req.body.email,
                     username: req.body.username,
                     password_hash: req.body.password,
-                    food_restrictions: req.body.food_restrictions,
+                    dietary_options: req.body.dietary_options,
                     age: req.body.age,
                     bios: req.body.bios,
                     gender: req.body.gender,
